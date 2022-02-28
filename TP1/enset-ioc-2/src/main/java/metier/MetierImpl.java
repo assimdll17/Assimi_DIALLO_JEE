@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MetierImpl implements IMetier{
     @Autowired
-    @Qualifier("dao")
+    @Qualifier("daoVWS")
     private IDao dao;
 
     public void setDao(IDao dao) {
