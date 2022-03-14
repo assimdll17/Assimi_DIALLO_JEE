@@ -36,7 +36,7 @@ public class JpaAppApplication implements CommandLineRunner {
         System.out.println("Total elements :"+patients.getTotalElements());
         System.out.println("Num Page: "+patients.getNumber());
        // List<Patient> content = patients.getContent(); On peut utiliser content a la place de patients pour le foreach
-
+        System.out.println("****************All******************");
        patients.forEach(p -> {
            System.out.println("===============================");
            System.out.println(p.getId());
@@ -45,7 +45,8 @@ public class JpaAppApplication implements CommandLineRunner {
            System.out.println(p.getDateNaissance());
            System.out.println(p.isMalade());
        });
-        System.out.println("#########################");
+
+        System.out.println("******************By Malade*****************");
         //Utilisation d'une methode definie dans l'interface
         Page<Patient> byMalade = patientRepository.findByMalade(true,PageRequest.of(0,4));
         byMalade.forEach(p -> {
@@ -57,7 +58,18 @@ public class JpaAppApplication implements CommandLineRunner {
             System.out.println(p.isMalade());
         });
 
-        System.out.println("*****************************");
+        System.out.println("******************Chercher Patient*****************");
+        List<Patient> patientList = patientRepository.chercherPatients("%H%",40);
+        patientList.forEach(p -> {
+            System.out.println("++++++++++++++++++++++++++++");
+            System.out.println(p.getId());
+            System.out.println(p.getNom());
+            System.out.println(p.getScore());
+            System.out.println(p.getDateNaissance());
+            System.out.println(p.isMalade());
+        });
+
+        System.out.println("*************By Id****************");
         Patient patient = patientRepository.findById(1L).orElse(null);
         if(patient!=null){
             System.out.println(patient.getNom());
@@ -68,7 +80,7 @@ public class JpaAppApplication implements CommandLineRunner {
         patientRepository.save(patient);
 
         //Suppression
-        patientRepository.deleteById(1L);
+        //patientRepository.deleteById(1L);
 
 
 
