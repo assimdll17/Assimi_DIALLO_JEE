@@ -1,3 +1,6 @@
+COMPTE RENDU DU TP HOSPITAL
+
+
 ############################### PATIENT ################################.
 Entité Patient dans le package ma.enset.hospital.entities
 ![img_1.png](img_1.png)
