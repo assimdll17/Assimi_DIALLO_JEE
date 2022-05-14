@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier les informations d'un étudiant</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+        <form method="post" th:action="@{/admin/save(keyword=${keyword}, page=${page})}">
+        <div class="modal-body">
+            <div>
+                <label>ID : </label>
+                <label th:text="${etudiant.id}">ID</label>
+                <input class="form-control" type="hidden" name="id" th:value="${etudiant.id}">
+            </div>
+            <div class="input-group mt-3">
+                <span class="input-group-text" id="basic-ad">
+                    <i class="fas fa-user"></i>
+                </span>
+                <input
+                        type="text"
+                        class="form-control"
+                        name="nom"
+                        th:value="${etudiant.nom}"
+                />
+              </div>
+               <span class="text-danger" th:errors="${etudiant.nom}" ></span>
+
+                <div class="input-group mt-3">
+                    <span class="input-group-text" id="basic-add">
+                        <i class="fas fa-user"></i>
+                    </span>
+                <input
+                        type="text"
+                        class="form-control"
+                        name="prenom"
+                        th:value="${etudiant.prenom}"
+                />
+            </div>
+            <span class="text-danger" th:errors="${etudiant.prenom}" ></span>
+
+            <div class="input-group mt-3">
+                <span class="input-group-text" id="basic-addo">
+                    <i class="fas fa-at"></i>
+                </span>
+                <input
+                        type="email"
+                        class="form-control"
+                        name="email"
+                        th:value="${etudiant.email}"
+                />
+            </div>
+            <span class="text-danger" th:errors="${etudiant.email}"></span>
+
+            <div class="input-group mt-3">
+                <span class="input-group-text" id="basic-addon">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                </span>
+                <input
+                        type="date"
+                        class="form-control"
+                        name="dateNaissance"
+                        th:value="${etudiant.dateNaissance}"
+                />
+            </div>
+            <div class="text-danger" th:errors="${etudiant.dateNaissance}"></div>
+
+            <div class="input-group mt-3">
+                <label class="input-group-text">
+                    <i class="fas fa-user-tag"></i>
+                </label>
+                <select class="form-select" id="genre_i" name="genre" th:value="${etudiant.genre}">
+                    <option selected>Choisir...</option>
+                    <option value="MASCULIN">MASCULIN</option>
+                    <option value="FEMININ">FEMININ</option>
+                </select>
+            </div>
+
+            <div class="input-group mt-3">
+                <label style="margin-right: 10px">En règle</label>
+                <input type="checkbox"  name="enregle" th:checked="${etudiant.enregle}">
+            </div>
+            <div class="text-danger" th:errors="${etudiant.enregle}"></div>
+
+        </div>
+        <div class="modal-footer">
+
+            <button type="submit" class="btn btn-primary" id="add_bt">
+                Modifier
+            </button>
+        </div>
+
+    </form>
+        </div>
+    </div>
+
+    <div class="col-md-4"></div>
+    </div>
+</div>
+
+</body>
+</html>

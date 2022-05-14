@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Accueil-Etudiants</title>
+
+</head>
+<body>
+<div layout:fragment="content">
+    <!--Main section-->
+    <div th:class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Gérer les étudiants
+                    <span class="badge bg-success" id="count_badge"></span>
+                </h2>
+            </div>
+            <div class="col-md-6 mt-5">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-8">
+                        <form method="get" th:action="@{/user/index}">
+                            <label>Mot</label>
+                            <input type="text" name="keyword" th:value="${keyword}">
+                            <button type="submit" class="btn btn-primary">Rechercher</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="add_user">
+            <!-- Button trigger modal -->
+            <div class="row" sec:authorize="hasAuthority('ADMIN')">
+                <div class="col">
+                    <button
+                            type="button"
+                            class="btn  btn-outline-success"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                    >
+                        <strong>Ajouter un étudiant</strong>
+
+                    </button>
+
+                </div>
+                <div class="col" id="alerts_label"></div>
+
+            </div>
+
+
+            <!-- Modal -->
+            <div
+                    class="modal fade"
+                    id="exampleModal"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+            >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">
+                                <!--  -->
+                                <div id="adding_alert">Ajouter un étudiant</div>
+                            </h5>
+                            <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <form method="post" th:action="@{/admin/save}">
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                              <span class="input-group-text" id="basic-addon1">
+                                 <i class="fas fa-user"></i>
+                              </span>
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        name="nom"
+                                        placeholder="Nom"
+                                        aria-label="Nom"
+                                        th:value="${etudiant.nom}"
+                                        aria-describedby="basic-addon1"
+                                        id="lastname_in"
+                                 />
+                                <span class="text-danger" th:errors="${etudiant.nom}"></span>
+                            </div>
+                            <div class="input-group mb-3">
+                              <span class="input-group-text" id="basic-addon2">
+                                 <i class="fas fa-user"></i>
+                              </span>
+                                <input
+                                        type="text"
+                                        class="form-control"
+                                        name="prenom"
+                                        placeholder="Prenom"
+                                        aria-label="Prenom"
+                                        th:value="${etudiant.prenom}"
+                                        aria-describedby="basic-addon2"
+                                        id="firstname_in"
+                                />
+                                <span class="text-danger" th:errors="${etudiant.prenom}"></span>
+                            </div>
+                            <div class="input-group mb-3">
+                              <span class="input-group-text" id="basic-addon3">
+                              <i class="fas fa-at"></i>
+                               </span>
+                                <input
+                                        type="email"
+                                        class="form-control"
+                                        name="email"
+                                        placeholder="Email"
+                                        aria-label="Email"
+                                        th:value="${etudiant.email}"
+                                        aria-describedby="basic-addon3"
+                                        id="email_in"
+                                />
+                             </div>
+                            <div class="input-group mb-3">
+                              <span class="input-group-text" id="basic-addon4">
+                              <i class="fa fa-calendar" aria-hidden="true"></i>
+                               </span>
+                                <input
+                                        type="date"
+                                        class="form-control"
+                                        name="dateNaissance"
+                                        placeholder="Date"
+                                        aria-label="Date"
+                                        th:value="${etudiant.dateNaissance}"
+                                        aria-describedby="basic-addon4"
+                                        id="date_in"
+                                />
+                            </div>
+                            <div class="input-group mb-3">
+                                <label class="input-group-text">
+                                    <i class="fas fa-user-tag"></i>
+                                </label>
+                                <select class="form-select" id="genre_in" name="genre" th:value="etudiant.genre">
+                                    <option selected>Choisir...</option>
+                                    <option value="MASCULIN">MASCULIN</option>
+                                    <option value="FEMININ">FEMININ</option>
+                                </select>
+                            </div>
+                             <div class="input-group mb-3">
+
+                                 <label style="margin-right: 10px">En règle</label>
+                                 <input type="checkbox"  name="enregle"
+                                        th:checked="${etudiant.enregle}">
+                                 <span class="text-danger" ></span>
+                             </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                                    id="close_and_reload_btn"
+                            >
+                                Fermer
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="add_btn">
+                                Ajouter
+                            </button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="users_table mt-2">
+            <table class="table table-striped table-hover" id="users_table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prenom</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Genre</th>
+                    <th scope="col">En règle</th>
+                </tr>
+                </thead>
+                <tbody data-page="1">
+                <tr th:each="e:${etudiants}">
+                    <td th:text="${e.id}"></td>
+                    <td th:text="${e.nom}"></td>
+                    <td th:text="${e.prenom}"></td>
+                    <td th:text="${e.email}"></td>
+                    <td th:text="${e.dateNaissance}"></td>
+                    <td th:text="${e.genre}"></td>
+                    <td th:text="${e.isEnregle()}"></td>
+                    <td sec:authorize="hasAuthority('ADMIN')">
+                        <a onclick="return confirm('Etes-vous sûr?')" class="btn btn-danger"
+                           th:href="@{/admin/delete(id=${e.id},keyword=${keyword},page=${pageActuelle})}">
+                            Supp.
+                        </a>
+                    </td>
+                    <td sec:authorize="hasAuthority('ADMIN')">
+                        <a class="btn btn-success"
+                           th:href="@{/admin/editEtudiant(id=${e.id}, keyword=${keyword}, page=${pageActuelle})}">
+                            Modif.
+                        </a>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pgination ********-->
+        <nav aria-label="Page navigation example" id="pagination">
+            <ul class="pagination justify-content-center mb-3">
+
+                <li th:each="page,status:${pages}">
+                    <a th:class="${status.index==pageActuelle?'btn btn-primary ms-3':'btn btn-outline-primary ms-3'}"
+                       th:text="${status.index}"
+                       th:href="@{/user/index(page=${status.index},keyword=${keyword})}"
+                    ></a>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+    <!-- Main section-->
+</div>
+
+</body>
+</html>

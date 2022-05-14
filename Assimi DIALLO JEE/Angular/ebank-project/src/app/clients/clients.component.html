@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="">
+  <div class="card">
+    <div class="card-header bg-primary">Liste des clients</div>
+    <div class="card-body">
+      <button class="btn btn-primary" (click)="onGetClients()">Clients</button>
+    </div>
+    <div class="card-body">
+      <form #f="ngForm" (ngSubmit)="onChercher(f.value)" >
+        <div class="">
+          <label>Keyword</label>
+          <input type="text" name="keyword" ngModel>
+          <button type="reset" class="btn btn-primary">Chercher</button>
+        </div>
+      </form>
+      <table *ngIf="clients" class="table table-striped">
+        <thead>
+        <tr>
+          <th>ID</th><th>Nom</th><th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let c of clients">
+          <td>{{c.id}}</td>
+          <td>{{c.name}}</td>
+          <td>{{c.email}}</td>
+          <td><a href="" class="btn btn-danger">DELETE</a></td>
+          <td><a href="" class="btn btn-success">EDIT</a></td>
+          <td><a (click)="onComptesClients(c.id)" class="btn btn-info">COMPTES</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+</div>
+
+
+
