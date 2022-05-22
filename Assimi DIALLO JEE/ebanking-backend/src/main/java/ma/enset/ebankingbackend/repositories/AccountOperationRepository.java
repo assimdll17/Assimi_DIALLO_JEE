@@ -14,5 +14,6 @@ public interface AccountOperationRepository extends JpaRepository<AccountOperati
     //@Query("select b from AccountOperation b where b.bankAccount.id = :x ")
    // List<AccountOperation> chercherOperationsCompte(@Param("x") String id);
     List<AccountOperation> findByBankAccountId(String accountId);
-    Page<AccountOperation> findByBankAccountId(String accountId, Pageable pageable);
+
+    Page<AccountOperation> findByBankAccountIdOrderByOperationDateDesc(String accountId, Pageable pageable);
 }
